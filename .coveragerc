@@ -1,0 +1,3 @@
+[run]
+source = netmanager2
+omit = netmanager2/test*
