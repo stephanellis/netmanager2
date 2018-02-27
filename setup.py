@@ -13,6 +13,15 @@ requires = [
     'pyramid_jinja2',
     'pyramid_debugtoolbar',
     'waitress',
+    'gunicorn',
+    'redis',
+    'pycouchdb',
+    'python-box',
+    'logzero',
+    'requests',
+    'ldap3',
+    'jinja2-highlight',
+    'pyramid_celery'
     ]
 
 tests_require = [

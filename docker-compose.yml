@@ -1,0 +1,28 @@
+version: "3"
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+  couchdb:
+    image: couchdb
+    ports:
+      - 5984:5984
+    volumes:
+      - couchdb:/opt/couchdb/data
+    environment:
+      COUCHDB_USER: nm2
+      COUCHDB_PASSWORD: passverd
+  web:
+    build: .
+    image: dev/netmanager2
+    links:
+      - redis
+      - couchdb
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/opt/netmanager2:Z
+
+volumes:
+    couchdb:
