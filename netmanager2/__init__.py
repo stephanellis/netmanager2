@@ -1,5 +1,5 @@
 from pyramid.config import Configurator
-
+from netmanager2.couchtools import CouchConfigurator
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -7,6 +7,11 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.include('pyramid_jinja2')
     config.add_static_view('static', 'static', cache_max_age=3600)
+    config.registry.cc = CouchConfigurator(
+            settings["couchdb.server"],
+            settings["couchdb.db"],
+            designdocs=settings["couchdb.designdocs"]
+    )
     config.add_route('home', '/')
     config.scan()
     return config.make_wsgi_app()

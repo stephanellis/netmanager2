@@ -84,13 +84,3 @@ class CouchConfigurator:
     def loadfile(self, fp): # just reads all lines from the file
         with open(fp, "r") as f:
             return "".join(f.readlines())
-
-'''
-output of os.walk
-/opt/eac2/eac2/designdocs ['users'] []
-/opt/eac2/eac2/designdocs/users ['byid', 'byusername', 'all'] []
-/opt/eac2/eac2/designdocs/users/byid [] ['map.js']
-/opt/eac2/eac2/designdocs/users/byusername [] ['map.js']
-/opt/eac2/eac2/designdocs/users/all [] ['map.js']
-
-'''
