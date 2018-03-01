@@ -84,3 +84,46 @@ class CouchConfigurator:
     def loadfile(self, fp): # just reads all lines from the file
         with open(fp, "r") as f:
             return "".join(f.readlines())
+
+class _DocMeta(type):
+    def __new__(cls, name, bases, body):
+        if not 'doctype' in body and name is not "Doc":
+            raise TypeError("{} derives from Doc, but does not have an doctype attribute".format(name))
+        return super().__new__(cls, name, bases, body)
+
+
+class Doc(object, metaclass=_DocMeta):
+    """
+    ODMish class, just add couchdb stuff to the dict class
+    """
+
+
+    def __init__(self, db=None):
+        self.db = db
+        self.doctype = Field(self.doctype, required=True)
+
+
+    def __setattr__(self, name, val):
+        if hasattr(self, name):
+            attr = getattr(self, name)
+            if isinstance(attr, Field):
+                attr.value = val
+                return
+        super().__setattr__(name, val)
+
+
+    def save(self):
+        pass
+
+
+class Field(object):
+    def __init__(self, default=None, required=False, constraints=[]):
+        self.value = None
+        self.required = required
+        self.constraints = constraints
+
+
+    def __eq__(self, val):
+        if self.value == val:
+            return True
+        return False
